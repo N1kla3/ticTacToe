@@ -7,17 +7,22 @@ using namespace std;
 class Game
 {
 private:
-    int fieldSize,I,J,K,Sx,So;
-    vector< vector<int> > field;
+    int fieldSize,k;
+    vector<vector<int>> field;
 
 public:
-    Game(int fSize) : fieldSize(fSize){}
-    void MakeField();
-    void ShowField();
-    int CheckWin();
-    int GetValue(int ii, int jj);
-    bool CheckPlace(int ii, int jj);
-    void SetValue(int ii, int jj, int val);
+    explicit Game(int fSize) : fieldSize(fSize){
+        k = fieldSize * fieldSize;
+    }
+    ~Game(){
+        cout << "Game over!";
+    }
+    void makeField();
+    void showField();
+    int checkWin();
+    int getValue(int row, int column);
+    bool checkPlace(int row, int column);
+    void setValue(int row, int column, int val);
 };
 
 #endif // GAME_H_INCLUDED

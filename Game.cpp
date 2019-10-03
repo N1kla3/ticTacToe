@@ -3,81 +3,95 @@
 
 using namespace std;
 
-void Game::MakeField()
-{   vector<int> fieldBuilder;
-    K = fieldSize * fieldSize;
-    for(I=0; I < fieldSize; I++)fieldBuilder.push_back(0);
-    for(I=0; I < fieldSize; I++)field.push_back(fieldBuilder);
+void Game::makeField()
+{
+    vector<int> fieldBuilder(fieldSize, 0);
+    for(int i = 0; i < fieldSize; i++)field.push_back(fieldBuilder);
 }
 
-void Game::ShowField()
+void Game::showField()
 {
-    for(I=0; I < fieldSize; I++)
+    cout << endl;
+    for(int i = 0; i < fieldSize; i++)
     {
-        for(J=0; J < fieldSize; J++)
+        for(int j = 0; j < fieldSize; j++)
         {
-            if(J)cout << char(124);
-            if(field[I][J] == 0)cout << " "; else
-            if(field[I][J] == 1)cout << "X"; else cout << "O";
+            if(j)cout << char(124);
+            if(field[i][j] == 0)cout << " "; else
+            if(field[i][j] == 1)cout << "X"; else cout << "O";
         }
         cout << endl;
-        if(I < fieldSize - 1)for(J=0; J < fieldSize; J++)
-        {
-            if(J)cout << char(134); cout << char(173);
+        if(i < fieldSize - 1)
+            for(int j = 0; j < fieldSize; j++){
+                if(j)cout << char(134); cout << char(173);
         }
         cout << endl;
     }
 }
 
-int Game::CheckWin()
+int Game::checkWin()
 {
-    for(I=0; I < fieldSize; I++)
+    int i;
+    int j;
+    int maxSizeO;
+    int maxSizeX;
+    for(i = 0; i < fieldSize; i++)
     {
-        Sx=0; So=0; for(J=0; J < fieldSize; J++)
+        maxSizeX = 0; maxSizeO = 0;
+        for(j = 0; j < fieldSize; j++)
         {
-            if(field[I][J] == 1)Sx++; else
-            if(field[I][J] == 2)So++;
+            if(field[i][j] == 1)maxSizeX++; else
+            if(field[i][j] == 2)maxSizeO++;
         }
-        if(Sx == fieldSize)return 1; else if(So == fieldSize)return 2;
+        if(maxSizeX == fieldSize)return 1; else if(maxSizeO == fieldSize)return 2;
     }
-    for(I=0; I < fieldSize; I++)
+    for(i = 0; i < fieldSize; i++)
     {
-        Sx=0; So=0; for(J=0; J < fieldSize; J++)
+        maxSizeX = 0; maxSizeO = 0;
+        for(j = 0; j < fieldSize; j++)
         {
-            if(field[J][I] == 1)Sx++; else
-            if(field[J][I] == 2)So++;
+            if(field[j][i] == 1)maxSizeX++; else
+            if(field[j][i] == 2)maxSizeO++;
         }
-        if(Sx == fieldSize)return 1; else if(So == fieldSize)return 2;
+        if(maxSizeX == fieldSize)return 1; else if(maxSizeO == fieldSize)return 2;
     }
-    Sx=0; So=0;
-    for(I=0; I < fieldSize; I++)
+    maxSizeX=0; maxSizeO=0;
+    for(i = 0; i < fieldSize; i++)
     {
-        if(field[I][I] == 1)Sx++; else
-        if(field[I][I] == 2)So++;
+        if(field[i][i] == 1)maxSizeX++; else
+        if(field[i][i] == 2)maxSizeO++;
     }
-    if(Sx == fieldSize)return 1; else if(So == fieldSize)return 2;
-    Sx=0; So=0; for(I=0; I < fieldSize; I++)
+    if(maxSizeX == fieldSize)return 1;
+    else if(maxSizeO == fieldSize)return 2;
+
+    maxSizeX=0; maxSizeO=0;
+    for(i = 0; i < fieldSize; i++)
     {
-        if(field[I][fieldSize - I] == 1)Sx++; else
-        if(field[I][fieldSize - I] == 2)So++;
+        if(field[i][fieldSize - i] == 1)
+            maxSizeX++;
+        else if(field[i][fieldSize - i] == 2)
+            maxSizeO++;
     }
-    if(Sx == fieldSize)return 1; else if(So == fieldSize)return 2;
-    if(!K)return 3; else return 0;
+    if(maxSizeX == fieldSize)return 1;
+    else if(maxSizeO == fieldSize)return 2;
+
+    if(!k)return 3;
+    else return 0;
 }
 
-int Game::GetValue(int ii, int jj)
+int Game::getValue(int row, int column)
 {
-    return field[ii][jj];
+    return field[row][column];
 }
 
-bool Game::CheckPlace(int ii, int jj)
+bool Game::checkPlace(int row, int column)
 {
-    if((ii<0) || (jj<0) || (ii >= fieldSize) || (jj >= fieldSize))return false;
-    return !GetValue(ii,jj);
+    if((row < 0) || (column < 0) || (row >= fieldSize) || (column >= fieldSize))return false;
+    return !getValue(row, column);
 }
 
-void Game::SetValue(int ii, int jj, int val)
+void Game::setValue(int row, int column, int val)
 {
-    field[ii][jj] = val;
-    K--;
+    field[row][column] = val;
+    k--;
 }
