@@ -6,17 +6,18 @@ using namespace std;
 
 class Game
 {
-    private:
-      int N,I,J,K,Sx,So; vector<int> em;
-      vector< vector<int> > F;
+private:
+    int fieldSize,I,J,K,Sx,So;
+    vector< vector<int> > field;
 
-    public:
-      void MakeField(int nn);
-      void ShowField();
-      int CheckWin();
-      int GetValue(int ii, int jj);
-      bool CheckPlace(int ii, int jj);
-      void SetValue(int ii, int jj, int val);
+public:
+    Game(int fSize) : fieldSize(fSize){}
+    void MakeField();
+    void ShowField();
+    int CheckWin();
+    int GetValue(int ii, int jj);
+    bool CheckPlace(int ii, int jj);
+    void SetValue(int ii, int jj, int val);
 };
 
 #endif // GAME_H_INCLUDED
