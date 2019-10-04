@@ -10,7 +10,6 @@ int main()
     cout << "Ведите размер поля : ";
     cin >> n;
     Game myGame(n);
-    myGame.makeField();
 
     while(true)
     {

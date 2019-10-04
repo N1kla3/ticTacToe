@@ -3,10 +3,30 @@
 
 using namespace std;
 
-void Game::makeField()
-{
-    vector<int> fieldBuilder(fieldSize, 0);
-    for(int i = 0; i < fieldSize; i++)field.push_back(fieldBuilder);
+Game::Game(int fSize) : fieldSize(fSize){
+    maxMoves = fieldSize * fieldSize;
+    field = new int*[fieldSize];
+    for (int i = 0; i < fieldSize; i++)
+        field[i] = new int[fieldSize];
+
+    for (int i = 0; i < fieldSize; i++) // ввод
+        for (int j = 0; j < fieldSize; j++)
+        {
+            field[i][j] = 0;
+        }
+}
+
+Game::~Game(){
+    for (int i = 0; i < fieldSize; i++)
+    {
+        delete [] field[i];
+    }
+    delete [] field;
+    cout << "Game over!";
+}
+
+int* Game::operator [] (int i){
+    return field[i];
 }
 
 void Game::showField()
@@ -31,10 +51,7 @@ void Game::showField()
 
 int Game::checkWin()
 {
-    int i;
-    int j;
-    int maxSizeO;
-    int maxSizeX;
+    int i, j, maxSizeO, maxSizeX;
     for(i = 0; i < fieldSize; i++)
     {
         maxSizeX = 0; maxSizeO = 0;
@@ -75,23 +92,18 @@ int Game::checkWin()
     if(maxSizeX == fieldSize)return 1;
     else if(maxSizeO == fieldSize)return 2;
 
-    if(!k)return 3;
+    if(!maxMoves)return 3;
     else return 0;
-}
-
-int Game::getValue(int row, int column)
-{
-    return field[row][column];
 }
 
 bool Game::checkPlace(int row, int column)
 {
     if((row < 0) || (column < 0) || (row >= fieldSize) || (column >= fieldSize))return false;
-    return !getValue(row, column);
+    return !field[row][column];
 }
 
 void Game::setValue(int row, int column, int val)
 {
     field[row][column] = val;
-    k--;
+    maxMoves--;
 }
