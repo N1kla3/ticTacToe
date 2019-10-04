@@ -29,6 +29,7 @@ int* Game::operator [] (int i){
     return field[i];
 }
 
+
 void Game::showField()
 {
     cout << endl;
