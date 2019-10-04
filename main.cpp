@@ -1,32 +1,41 @@
 #include <iostream>
-#include <vector>
-#include "game.h"
+#include "Game.h"
 
 using namespace std;
 
 int main()
 {
-    int n,x,y,i,k=1,j; Game G;
+    int n,x,y,k=1,checker;
     setlocale(LC_ALL, "Russian");
-    cout << "Âåäèòå ðàçìåð ïîëÿ N: ";
-    cin >> n; G.MakeField(n);
-    for(;;)
+    cout << "Âåäèòå ðàçìåð ïîëÿ : ";
+    cin >> n;
+    Game myGame(n);
+    myGame.makeField();
+
+    while(true)
     {
-        for(;;)
+        while(true)
         {
-            G.ShowField();
-            if(k==1)cout << endl << "Õîä çà êðåñòèêè: ";
+            myGame.showField();
+            if(k == 1)cout << endl << "Õîä çà êðåñòèêè: ";
             else cout << endl << "Õîä çà íîëèêè: ";
-            cin >> x >> y; if(G.CheckPlace(x-1,y-1))
+            cin >> x >> y;
+            if(myGame.checkPlace(x - 1, y - 1))
             {
-                G.SetValue(x-1,y-1,k); break;
+                myGame.setValue(x - 1, y - 1, k);
+                break;
             }
         }
-        k=3-k; j=G.CheckWin(); if(j)G.ShowField();
-        if(j==1)cout << "ÏÎÁÅÄÀ ÊÐÅÑÒÈÊÎÂ"<< endl; else
-        if(j==2)cout << "ÏÎÁÅÄÀ ÍÎËÈÊÎÂ"<< endl; else
-        if(j==3)cout << "ÍÈ×Üß"<< endl;
-        if(j)return 0;
+        k = 3 - k;
+        checker = myGame.checkWin();
+        if(checker)myGame.showField();
+
+        if(checker == 1)
+            cout << "ÏÎÁÅÄÀ ÊÐÅÑÒÈÊÎÂ"<< endl;
+        else if(checker == 2)
+            cout << "ÏÎÁÅÄÀ ÍÎËÈÊÎÂ"<< endl;
+        else if(checker == 3)
+            cout << "ÍÈ×Üß"<< endl;
+        if(checker)return 0;
     }
-    return 0;
 }
