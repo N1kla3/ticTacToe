@@ -3,14 +3,17 @@
 
 using namespace std;
 
+int readFieldSize();
+void readPoints(int *x, int *y);
+
 int main()
 {
-    int n,x,y,k=1,checker;
+    int n, x, y, k=1, checker;
     setlocale(LC_ALL, "Russian");
-    cout << "Ведите размер поля : ";
-    cin >> n;
+
+    n = readFieldSize();
+    if(n == 0) return 0;
     Game myGame(n);
-    myGame.makeField();
 
     while(true)
     {
@@ -19,7 +22,7 @@ int main()
             myGame.showField();
             if(k == 1)cout << endl << "Ход за крестики: ";
             else cout << endl << "Ход за нолики: ";
-            cin >> x >> y;
+            readPoints(&x, &y);
             if(myGame.checkPlace(x - 1, y - 1))
             {
                 myGame.setValue(x - 1, y - 1, k);
@@ -38,4 +41,27 @@ int main()
             cout << "НИЧЬЯ"<< endl;
         if(checker)return 0;
     }
+}
+
+int readFieldSize(){
+    while(true){
+        cout << "Ведите размер поля : ";
+        int n = 13;
+        cin >> n;
+        if(n > 0 && n < 10){
+            return n;
+        }else if(n > 10)
+            return 0; //way to exit programm
+        else cout << "\nВведите корректно\n";
+    }
+}
+
+void readPoints(int *x, int *y){
+        cin >> *x >> *y;
+        if(*x == 0 || *y == 0){
+            *x = -13; *y = -13;
+            cout << "\nВведите корректно\n";
+            cin.clear();
+            fflush(stdin);
+        }
 }
