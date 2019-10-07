@@ -8,38 +8,42 @@ void readPoints(int *x, int *y);
 
 int main()
 {
-    int n, x, y, k=1, checker;
+    int n, x, y, k, checker;
     setlocale(LC_ALL, "Russian");
 
-    n = readFieldSize();
-    if(n == 0) return 0;
-    Game myGame(n);
+    while(true){
+        n = readFieldSize();
+        if(n == 0) return 0;
+        Game *myGame = new Game(n);
+        k = 1;
 
-    while(true)
-    {
         while(true)
         {
-            myGame.showField();
-            if(k == 1)cout << endl << "Õîä çà êðåñòèêè: ";
-            else cout << endl << "Õîä çà íîëèêè: ";
-            readPoints(&x, &y);
-            if(myGame.checkPlace(x - 1, y - 1))
+            while(true)
             {
-                myGame.setValue(x - 1, y - 1, k);
-                break;
+                myGame->showField();
+                if(k == 1)cout << endl << "Õîä çà êðåñòèêè: ";
+                else cout << endl << "Õîä çà íîëèêè: ";
+                readPoints(&x, &y);
+                if(myGame->checkPlace(x - 1, y - 1))
+                {
+                    myGame->setValue(x - 1, y - 1, k);
+                    break;
+                }
             }
-        }
-        k = 3 - k;
-        checker = myGame.checkWin();
-        if(checker)myGame.showField();
+            k = 3 - k;
+            checker = myGame->checkWin();
+            if(checker)myGame->showField();
 
-        if(checker == 1)
-            cout << "ÏÎÁÅÄÀ ÊÐÅÑÒÈÊÎÂ"<< endl;
-        else if(checker == 2)
-            cout << "ÏÎÁÅÄÀ ÍÎËÈÊÎÂ"<< endl;
-        else if(checker == 3)
-            cout << "ÍÈ×Üß"<< endl;
-        if(checker)return 0;
+            if(checker == 1)
+                cout << "ÏÎÁÅÄÀ ÊÐÅÑÒÈÊÎÂ"<< endl;
+            else if(checker == 2)
+                cout << "ÏÎÁÅÄÀ ÍÎËÈÊÎÂ"<< endl;
+            else if(checker == 3)
+                cout << "ÍÈ×Üß"<< endl;
+            if(checker)break;
+        }
+        delete myGame;
     }
 }
 
@@ -53,6 +57,8 @@ int readFieldSize(){
         }else if(n > 10)
             return 0; //way to exit programm
         else cout << "\nÂâåäèòå êîððåêòíî\n";
+        cin.clear();
+        fflush(stdin);
     }
 }
 
