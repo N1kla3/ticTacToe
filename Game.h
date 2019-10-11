@@ -17,7 +17,9 @@ public:
     int checkWin();
     bool checkPlace(int row, int column);
     void setValue(int row, int column, int val);
-    int* operator [] (int i);
+    int getPoint(int i, int j){
+        return field[i][j];
+    }
 };
 
 #endif // GAME_H_INCLUDED
